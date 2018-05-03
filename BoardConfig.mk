@@ -54,25 +54,18 @@ BOARD_KERNEL_BASE := 0x40000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_RAMDISK_OFFSET := 0x04000000
 BOARD_TAGS_OFFSET := 0xE000000
-ifeq ($(FORCE_32_BIT),true)
 ARCH := arm
 TARGET_ARCH := arm
 KERNEL_ARCH := arm
 TARGET_KERNEL_ARCH := arm
 TARGET_KERNEL_CONFIG := panelli_defconfig
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,32N2 androidboot.selinux=permissive androidboot.selinux=disabled 
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,32N2 androidboot.selinux=permissive androidboot.selinux=disabled
 BOARD_KERNEL_OFFSET := 0x00008000
-else
-TARGET_KERNEL_ARCH := arm64
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 androidboot.selinux=permissive androidboot.selinux=disabled 
-BOARD_KERNEL_OFFSET = 0x00080000
-TARGET_USES_64_BIT_BINDER := true
-endif
 BOARD_MKBOOTIMG_ARGS := --kernel_offset $(BOARD_KERNEL_OFFSET) --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_TAGS_OFFSET)
 
 # make_ext4fs requires numbers in dec format
-BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216 
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216 
+BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2432696320
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 4698144768
 BOARD_CACHEIMAGE_PARTITION_SIZE := 419430400
@@ -80,7 +73,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_KMODULES := true
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := Moto_panelli,Moto panelli,panelli,panelli
+TARGET_OTA_ASSERT_DEVICE := Moto_C_Plus,panelli
 
 # Disable memcpy opt (for audio libraries)
 TARGET_CPU_MEMCPY_OPT_DISABLE := true
@@ -94,7 +87,7 @@ WITH_LINEAGE_CHARGER := false
 
 BOARD_DISABLE_HW_ID_MATCH_CHECK := true
 SUPPRESS_MTK_AUDIO_BLOB_ERR_MSG := true
- 
+
 # SensorHAL
 TARGET_SENSORS_DEVICE_API_VERSION := SENSORS_DEVICE_API_VERSION_1_1
 
@@ -115,7 +108,8 @@ OVERRIDE_RS_DRIVER := libRSDriver_mtk.so
 BOARD_USE_SOFT_GATEKEEPER := true
 
 # Mediatek support
-BOARD_USES_MTK_HARDWARE:=true
+BOARD_USES_MTK_HARDWARE := true
+MTK_HARDWARE := true
 #DISABLE_ASHMEM_TRACKING := true
 
 # Camera
@@ -133,9 +127,6 @@ BOARD_HARDWARE_CLASS += device/moto/panelli/lineagehw
 
 # Charger
 BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
-
-# RIL
-BOARD_RIL_CLASS := ../../../device/moto/panelli/ril/
 
 # GPS
 BOARD_GPS_LIBRARIES :=true
@@ -194,7 +185,7 @@ TW_REBOOT_BOOTLOADER := true
 TW_REBOOT_RECOVERY := true
 TW_HAS_DOWNLOAD_MODE := true
 TW_EXCLUDE_SUPERSU := true
-TW_USE_TOOLBOX := true
+#TW_USE_TOOLBOX := true
 
 TARGET_SYSTEM_PROP := device/moto/panelli/system.prop
 TARGET_SPECIFIC_HEADER_PATH := device/moto/panelli/include
