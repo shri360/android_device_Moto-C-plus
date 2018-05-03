@@ -6,8 +6,8 @@ LOCAL_PATH := device/moto/panelli
 
 $(call inherit-product-if-exists, vendor/moto/panelli/panelli-vendor.mk)
 
-DEVICE_PACKAGE_OVERLAYS += device/moto/panelli/overlay
-PRODUCT_PACKAGE_OVERLAYS += device/moto/panelli/overlay # enable this to be able overlay a default wallpaper
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+PRODUCT_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay # enable this to be able overlay a default wallpaper
 
 # Dalvik/HWUI
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
@@ -18,9 +18,6 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 # set locales & aapt config.
 PRODUCT_AAPT_CONFIG := normal xhdpi xxhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
-
-PRODUCT_DEFAULT_LANGUAGE := ru
-PRODUCT_DEFAULT_REGION   := RU
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -71,12 +68,12 @@ PRODUCT_COPY_FILES += \
 
 # Seccomp policy
 PRODUCT_COPY_FILES += \
-    device/moto/panelli/seccomp/mediacodec.policy:system/vendor/etc/seccomp_policy/mediacodec.policy \
-    device/moto/panelli/seccomp/mediaextractor.policy:system/vendor/etc/seccomp_policy/mediaextractor.policy
+    $(LOCAL_PATH)/seccomp/mediacodec.policy:system/vendor/etc/seccomp_policy/mediacodec.policy \
+    $(LOCAL_PATH)/seccomp/mediaextractor.policy:system/vendor/etc/seccomp_policy/mediaextractor.policy
     
 # HIDL
 PRODUCT_COPY_FILES += \
-    device/moto/panelli/hidl/manifest.xml:system/vendor/manifest.xml
+    $(LOCAL_PATH)/hidl/manifest.xml:system/vendor/manifest.xml
     
 
 # Ramdisk
@@ -124,23 +121,22 @@ PRODUCT_PACKAGES += \
     libnl_2 \
     charger_res_images \
     libion
-    
+
 # Storage
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sys.sdcardfs=true
-    
+
 # Bluetooth
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0-impl \
     android.hardware.bluetooth@1.0-service
-    
+
 # Camera HAL
 PRODUCT_PACKAGES += \
     camera.device@1.0-impl \
     camera.device@3.2-impl \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service
-
 
 # FM Radio
 PRODUCT_PACKAGES += \
@@ -152,24 +148,23 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Snap
 
-# CM14 mtk symbols
+# mtk symbols
 PRODUCT_PACKAGES += \
     mtk_symbols
-    
 
 # Power
 PRODUCT_PACKAGES += \
     power.mt6737m
-    
+
 # Vibrator
 PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.0-impl \
     android.hardware.vibrator@1.0-service
-    
+
 # Keymaster HAL
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@3.0-impl
-    
+
 # Sensors HAL
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
@@ -177,28 +172,28 @@ PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl \
     android.hardware.sensors@1.0-service \
     lights.mt6737m
-    
+
 # GPS HAL
 PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl
-    
+
 # GPS force mode
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.force.gps.mode=gnss
-    
+
 # USB HAL
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service
-    
+
 # Health HAL
 PRODUCT_PACKAGES += \
     android.hardware.health@1.0-impl \
     android.hardware.health@1.0-service
-    
+
 # Power HAL
 PRODUCT_PACKAGES += \
     android.hardware.power@1.0-impl
-    
+
 # Graphic HAL
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
@@ -224,7 +219,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
     media.stagefright.legacyencoder=0
-    
+
 # Properties
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hw.gyroscope=false \
@@ -233,7 +228,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	media.stagefright.use-awesome=false
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-	persist.sys.usb.config=mtp
+	persist.sys.usb.config=mtp,adb
 
 # Keyhandler package
 PRODUCT_PACKAGES += \
